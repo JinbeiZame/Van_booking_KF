@@ -1,0 +1,43 @@
+@charset "windows-874";
+/* CSS Document */
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-image: url(images/SAINT_78_01.gif);
+	background-attachment:fixed;
+	Font-family: Microsoft sans serif;
+	font-size:13px;
+	color:#000033;
+}
+b{
+	color:#000099;
+}
+
+a{ 
+color:#0000ff;
+text-decoration:none;
+
+}
+a:hover {
+color:#FF0000;
+//*font-weight:bold;*/
+font-variant:small-caps;
+}
+.today {font-family: ms sans serif; font-size: 10pt; 
+background:url(img/bg_sub_main.gif); color: #000000;  background-color: #ffff00;}
+.sunday {font-family: ms sans serif; font-size: 10pt; 
+ color: #FF0000; }
+.norm{
+background-color: #ffffff;
+ }
+.setday{background:url(img/img_19.gif); font-weight:bold;}
+.dayevent{ background-color:#F5F5F5; }
+.u{color:#0066CC;}
+.c{color:#FF9900;}
+.hb{color:#FFFFFF; font:bold; font-weight:bold;}
+.ch{color:#FF9900;font-weight:bold;}
+.blink{
+font-weight:bold;
+}
