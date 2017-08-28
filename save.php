@@ -107,7 +107,7 @@ $driver_id  	  	  = $_POST[driver_id];
 $driver_name  		= $_POST[driver_name];
 $driver_position  	= $_POST[driver_position];
 $driver_licence   	 = $_POST[driver_licence];
-
+$status = 1;
 
 function mailto($rsId,$noti){
 include "config.php";

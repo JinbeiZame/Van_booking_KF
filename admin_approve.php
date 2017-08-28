@@ -8,7 +8,7 @@
                           <tr>
                             <td align="center" colspan="2" height="50"><h4><b>Administrator</b></h4></td>
                           </tr>
-                          <tr>	
+                          <tr>
                                   <td height="50" width="100" align="center"><strong>Username</strong> </td>
                                   <td align="center"><input name="Username" type="text" id="Username" /></td>
                                 </tr>
@@ -21,7 +21,7 @@
                                       <input type="reset" name="Submit2" value="cancel" /></td>
                           </tr>
                         </table>
-                      
+
                     </form>
 					</td>
               </tr>
@@ -36,7 +36,7 @@
                           </tr>
                         </table></td>
                     </tr>
-                    
+
                     <tr>
                       <td align="right">&nbsp;</td>
                     </tr>
@@ -51,28 +51,37 @@
 							 include  "config.php";
 							 $link = mysql_connect($host,$user,$pass)  or die ("<div align='center' >ติต่อฐานข้อมูลไม่ได้</div>");
 							mysql_select_db($dbname,$link) or die ("ตายเลย");
-							mysql_query("USE minimart; ");
+							mysql_query("USE van-requisition; ");
 							mysql_query("SET NAMES 'utf8'; ");
-							$sqlnum = " select  * from  reserve where Status='' ";
-							$sql = " select  * from  reserve where Status='' order by RsId desc ";
-							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");	
-							$num=mysql_query($sqlnum) or die ("Please....");	
+							//$sqlnum = " select  * from  van_reserve where Status='' ";
+							$sqlnum = " select  * from  van_reserve  ";
+							$sql = " select  * from  van_reserve where Status = '1' ";
+							//$sql = " select  * from  van_reserve where Status='' order by RsId desc ";
+							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
+							$num=mysql_query($sqlnum) or die ("Please....");
 							$total = mysql_num_rows($num);
 						//echo "$total";
-							//$page = ceil($total/$limit); 
-							
+							//$page = ceil($total/$limit);
+
 if($total !=0){
 					//page($page,$total,$limit);
-					if($result ){	
+					if($result ){
 								echo "
 												<table border='0' cellpadding='1' cellspacing='1' width=100% >
 													<tr bgcolor='#CCCffc' >
-															<td width=5% align=center>ID</td>
-															<td align=center width=12%>Menu</td>
-															<th align=center width=15%>Dept.</th>
-															<th align=center width=20%>Reservation Name</th>        
+															<td width=5% align=center>Dept</td>
+															<td align=center width=12%>Name</td>
+															<th align=center width=15%>Position.</th>
+															<th align=center width=15%>Tel.</th>
 															<th align=center width=15%>Start date</th>
-															<th align=center width=15%>Due Date</th>
+															<th align=center width=15%>End date</th>
+															<th align=center width=15%>Start time.</th>
+															<th align=center width=15%>End time.</th>
+															<th align=center width=20%>place</th>
+															<th align=center width=15%>reason</th>
+															<th align=center width=15%>Driver name</th>
+															<th align=center width=15%>Driver Position</th>
+															<th align=center width=40%>Approve</th>
 													</tr>	";
 								$num=0;
 								/*
@@ -84,10 +93,25 @@ if($total !=0){
 								}
 								echo $num;
 								*/
-								
+
 								while($record=mysql_fetch_array($result )){
 										$num++;
-										$RsId = $record[RsId];
+										
+										$dept = $record[department];
+										$name = $record[name];
+										$position = $record[position];
+										$tel = $record[tel];
+										$start_date = $record[start_date];
+										$end_date = $record[end_date];
+										$Start_time = $record[Start_time];
+										$End_time = $record[End_time];
+										$place = $record[place];
+										$reason  = $record[reason];
+										$driver_name = $record[driver_name];
+										$driver_postion = $record[driver_position];
+										
+																				
+										/*$RsId = $record[RsId];
 										$Group1 = $record[Group1];
 										$Story = $record[Story];
 										$MeetTotal	= $record[MeetTotal];
@@ -98,16 +122,16 @@ if($total !=0){
 										$RsName = $record[RsName];
 										$TelNum = $record[TelNum];
 										$notiMail = $record[notify_email];
-										
+										*/
 										$y = split(" ",$sDate); //แยกวันที่กับเวลา
 										$ey = split(" ",$eDate);
 										$d = split("-",$y[0]);
 										$ed = split("-",$ey[0]);
-										$date = "$d[2]-$d[1]-$d[0]";  
-										$edate = "$ed[2]-$ed[1]-$ed[0]";  
-										
+										$date = "$d[2]-$d[1]-$d[0]";
+										$edate = "$ed[2]-$ed[1]-$ed[0]";
+
 										$Time="$y[1]-$ey[1]";
-										
+
 										if($num% 2 == 0){
 												$bg='#E9E9cc';
 										}
@@ -116,35 +140,42 @@ if($total !=0){
 										}
 										echo"
 												<tr bgcolor='$bg' >
-															<td  align=center>$RsId</td>
+															<td  align=center>$dept</td>
+															<td align=center>$name</td>
+															<td align=center>$position</td>
+															<td align=center>$tel</td>
+															<td align=center>$start_date</td>
+															<td align=center>$end_date</td>
+															<td align=center>$Start_time</td>
+															<td align=center>$End_time</td>
+															<td align=center>$place</td>
+															<td align=center>$reason</td>
+															<td align=center>$driver_name</td>
+															<td align=center>$driver_postion</td>
 															<td align=center >
-																	[<a href=save.php?save=1&&id=$RsId&&email=$notiMail>Approve</a>][<a href=save.php?remove=1&&id=$RsId&&email=$notiMail>Delete</a>]
+															[<a href=save.php?save=1&&id=$RsId&&email=$notiMail>Approve</a>][<a href=save.php?remove=1&&id=$RsId&&email=$notiMail>Delete</a>]
 															</td>
-															<td align=center>$Group1</td>
-															<td align=center>$RsName</td>
-															<td align=center>$date</td>
-															<td align=center>$edate</td>
-													</tr>";				
+													</tr>";
 								}
 								echo "</table>";
 								//page($page,$total,$limit);
-					}		
+					}
 }else
 	echo "<p align=center><font color=red>**ยังไม่มีการจอง Computer Notebook";
-			
+
 ?></td>
 
         </tr>
                     <tr>
                       <td>&nbsp;</td>
                     </tr>
-                    
+
                     <tr>
                       <td><? }?></td>
-                     
+
                     </tr>
-                    
-                    
+
+
                   </table>
                 </form>                </td>
               </tr>

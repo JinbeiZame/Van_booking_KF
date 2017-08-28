@@ -17,8 +17,8 @@
 		});
 	});
 </script>
-    
-<link rel="stylesheet" href="css/form/screen.css" type="text/css" media="screen" />         
+
+<link rel="stylesheet" href="css/form/screen.css" type="text/css" media="screen" />
 
 <style type="text/css" title="currentStyle">
 	@import "css/multi_table.css";
@@ -33,13 +33,13 @@
 					"sPaginationType": "full_numbers"
 				} );
 			} );
-		</script>      
-<title>จองอุปกรณ์</title>
+		</script>
+<title>Reservation Result</title>
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  
-          
+
+
                   <tr>
                   	<td height="25" align="center" bgcolor="#F8F8F8"><h4 align="center"><b>Reservation Result</b></h4></td>
                     <!-- <td height="20" align="center" bgcolor="#F8F8F8"><strong>ตารางการจอง Notebook</strong></td> -->
@@ -60,16 +60,16 @@
 
 							$sqlnum = " select * from van_reserve where Status='1'";
 							// $sql = " select * from van_reserve where Status='1' and ( sDate > '$end' or eDate > '$end') order by sDate desc ";
-							
+
 							$sql = " select * from van_reserve  ";
-							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");	
-							$num=mysql_query($sqlnum) or die ("Please....");	
+							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
+							$num=mysql_query($sqlnum) or die ("Please....");
 							$total = mysql_num_rows($num);
-							
+
 							// echo "$sql";
 							// echo "$total";
-							
-							
+
+
 							if($result){
 						?>
                                 <table class="example" width="100%" cellpadding="0" cellspacing="0">
@@ -77,21 +77,23 @@
                                     <tr>
                                         <!-- <th class="head" align="center" width="5%">ลำดับ</th> -->
                                         <th class="head" width="5%"><p align="center">ID</p></th>
-                                        <? if($session_name !=''){ ?>                                
-                                            <th align=center width=10%>Menu</th>
-                                        <? } ?>     
+                                        <? if($session_name !=''){ ?>
+                                            <th align=center width=5%>Menu</th>
+                                        <? } ?>
+																				<th class="head" width="7%"><p align="center">Report</p></th>
                                         <th class="head" width="7%"><p align="center">Dept.</p></th>
-                                        <th class="head" width="20%"><p align="center">Reservation Name</p></th>  
-                                        <th class="head" width="20%"><p align="center">Place</p></th>
-                                        <th class="head" width="20%"><p align="center">Reason</p></th>      
-                                        <th class="head" width="10%"><p align="center">Start Date</p></th>
-                                        <th class="head" width="10%"><p align="center">Due Date</p></th>
-                                        <th class="head" width="10%"><p align="center">Time</p></th>
-                                        
+                                        <th class="head" width="12%"><p align="left">Name</p></th>
+                                        <th class="head" width="20%"><p align="left">Place</p></th>
+                                        <th class="head" width="20%"><p align="left">Reason</p></th>
+                                        <th class="head" width="10%"><p align="left">Start Date</p></th>
+                                        <th class="head" width="10%"><p align="left">Due Date</p></th>
+                                        <th class="head" width="10%"><p align="left">Start time</p></th>
+																				<th class="head" width="10%"><p align="left">End time</p></th>
+
                                     </tr>
-                                   </thead>                        
-                        <?		
-								
+                                   </thead>
+                        <?
+
 								$num=0;
 								while($record=mysql_fetch_array($result )){
 										$num++;
@@ -102,15 +104,17 @@
 										$end_date 		= $record[end_date];
 										$place			= $record[place];
 										$reason			= $record[reason];
-										
+
 										$y 		= split(" ",$start_date); //แยกวันที่กับเวลา
 										$ey 	= split(" ",$end_date);
 										$e 		= split("-",$ey[0]);
 										$d 		= split("-",$y[0]);
-										$date 	= "$d[2]-$d[1]-$d[0]";  
-										$edate 	= "$e[2]-$e[1]-$e[0]";  
+										$date 	= "$d[2]-$d[1]-$d[0]";
+										$edate 	= "$e[2]-$e[1]-$e[0]";
 										$Time	= "$y[1]-$ey[1]";
-										
+
+										$Start_time			= $record[Start_time];
+										$End_time			= $record[End_time];
 										if($num% 2 == 0){
 												$bg='#E9E9cc';
 										}
@@ -121,8 +125,9 @@
 												<tr class='gradeA' height='40'>
 															<td align=center>$van_reserve_id</td>
 															"?>
-															<? if($session_name !=''){ echo "
-															<td align=center >[<a href=save.php?remove=31&&id=$van_reserve_id>ลบ</a>]</td>"; }?>
+															<? if($session_name !=''){
+															echo "<td align=center >[<a href=save.php?remove=31&&id=$van_reserve_id>ลบ</a>]</td>";
+															echo "<td align=center >[<a href=phptoexcel-new/van-report.php?number_id=$van_reserve_id>รายงาน</a>]</td>"; }?>
 															<? echo "
 															<td align=center>$department</td>
 															<td>$name</td>
@@ -130,20 +135,20 @@
 															<td>$reason</td>
 															<td align=center>$date</td>
 															<td align=center>$edate</td>
-															<td align=center>$Time</td>
-															
-													</tr>";		
+															<td align=center>$Start_time</td>
+															<td align=center>$End_time</td>
+													</tr>";
 													//[<a href='index.php?page=user_edit&&id=$EqId&&page=Eq'>แก้ไข</a>]
 								}
 								echo "</table>";
 					}
-					else { 
+					else {
 							echo"<div align=center>do not meet the database anything ";
 					}
 ?>
-                  
-                  
+
+
                 </table>
-                  
+
 </body>
 </html>

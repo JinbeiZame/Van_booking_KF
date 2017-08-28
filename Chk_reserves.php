@@ -22,8 +22,8 @@
 		});
 	</script>
 
-<link rel="stylesheet" href="css/form/screen.css" type="text/css" media="screen" />    
-<link rel="stylesheet" href="css/demo_table.css" type="text/css" media="screen" />       
+<link rel="stylesheet" href="css/form/screen.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/demo_table.css" type="text/css" media="screen" />
 
 
 <script src="js/jquery.validate.js" type="text/javascript"></script>
@@ -35,7 +35,7 @@
 					"sPaginationType": "full_numbers"
 				} );
 			} );
-		</script>    
+		</script>
 
 <form id="form1" name="form1" method="post" action="">
 <table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -43,7 +43,7 @@
                   <td height="25" align="center" bgcolor="#F8F8F8"><h4><b>Check Notebook Status</b></h4></td>
                   <!-- <td height="25" align="center" bgcolor="#F8F8F8"><strong>ตรวจเช็คการจอง Notebook</strong> -->
                </tr>
-			  
+
 				<tr>
                       <td align="center">
                         <select name="Room" id="Room">
@@ -83,7 +83,7 @@
 </form>
 <p>&nbsp;</p>
 				<?
-if($Showall  || $Submit){				
+if($Showall  || $Submit){
 							$udate="$y-$m-1";
 							$udateto="$y-$m-31";
 							include  "config.php";
@@ -91,13 +91,13 @@ if($Showall  || $Submit){
 							mysql_select_db($dbname,$link) or die ("ตายเลย");
 							mysql_query("USE minimart; ");
 							mysql_query("SET NAMES 'utf8'; ");
-							
+
 							if($Submit){
-									 if($Room ==''){ 
+									 if($Room ==''){
 											$sqlnum = "select * from reserve where  sDate between '$udate' and '$udateto' and Status=1";
 											$sql = " select * from reserve where  sDate between '$udate' and '$udateto' and Status=1 order by RsId desc";
 									}
-									  else if($Room && $m && $y){ 
+									  else if($Room && $m && $y){
 											$sqlnum = "select * from reserve where  Room='$Room' and (sDate between '$udate' and '$udateto') and Status=1";
 											$sql = " select * from reserve where  Room='$Room' and (sDate between '$udate' and '$udateto') and Status=1 order by RsId desc";
 									}
@@ -110,36 +110,36 @@ if($Showall  || $Submit){
 								$sqlnum = " select  * from  reserve where Status=1  ";
 								$sql = " select  * from  reserve where Status=1  order by sDate ";
 							}
-						
-							$result = mysql_query($sql) or die ("คิวรี่ไมไ้ด้");	
-							$num=mysql_query($sqlnum) or die ("Please....");	
+
+							$result = mysql_query($sql) or die ("คิวรี่ไมไ้ด้");
+							$num=mysql_query($sqlnum) or die ("Please....");
 							$total = mysql_num_rows($num);
 						//echo "$sql";
-							//$page = ceil($total/$limit); 			
+							//$page = ceil($total/$limit);
 	if($total != 0){
 						//page($page,$total,$limit,$RsId,$Group,$Story,$MeetTotal,$Room,$sDate,$eDate,$EqSupport,$RsName,$TelNum);
-						
-							if($result ){								
+
+							if($result ){
 ?>
 <table id="example" class="display" width="100%" cellpadding="0" cellspacing="0">
   <thead>
 	<tr>
     	<!-- <th class="head" align="center" width="5%">ลำดับ</th> -->
         <th class="head" width="5%"><p align="center">ID</p></th>
-								<? if($session_name !=''){ ?>                                
+								<? if($session_name !=''){ ?>
                                 	<th class="head" width=10%><p align="center">Menu</p></th>
-								<? } ?>     
+								<? } ?>
     	<th class="head" width="15%"><p align="center">Notebook No.</p></th>
         <th class="head" width="10%"><p align="center">Dept.</p></th>
-    	<th class="head" width="20%"><p align="center">Reservation Name</p></th>        
+    	<th class="head" width="20%"><p align="center">Reservation Name</p></th>
         <th class="head" width="15%"><p align="center">Start Date</p></th>
         <th class="head" width="15%"><p align="center">Due Date</p></th>
-        <th align="center" width="30%"><p align="center">Time</p></th>                                                      
-    	
-    </tr>
-   </thead>  
+        <th align="center" width="30%"><p align="center">Time</p></th>
 
-<?													
+    </tr>
+   </thead>
+
+<?
 								$num =0;
 								while($record=mysql_fetch_array($result )){
 										$num++;
@@ -153,18 +153,18 @@ if($Showall  || $Submit){
 										$EqSupport = $record[EqSupport];
 										$RsName = $record[RsName];
 										$TelNum = $record[TelNum];
-										
+
 										$y = split(" ",$sDate); //แยกวันที่กับเวลา
 										$y2=split(":",$y[1]);
 										$ey = split(" ",$eDate);
 										$ey2=split(":",$ey[1]);
-										
+
 										$d = split("-",$y[0]);
 										$e = split("-",$ey[0]);
-										$date  = "$d[2]-$d[1]-$d[0]";  
-										$edate = "$e[2]-$e[1]-$e[0]";  
+										$date  = "$d[2]-$d[1]-$d[0]";
+										$edate = "$e[2]-$e[1]-$e[0]";
 										$Time="$y2[0]:$y2[1] - $ey2[0]:$ey2[1]";
-										
+
 										if($num% 2 == 0){
 												$bg='#E9E9cc';
 										}
@@ -184,11 +184,11 @@ if($Showall  || $Submit){
 															<td align=center >$date</td>
 															<td align=center >$edate</td>
 															<td align=center >$Time</td>
-													</tr>";				
+													</tr>";
 								}
 								echo "</table>";
 					}
-					else { 
+					else {
 							echo"<div align=center>do not meet the database anything ";
 					}
 		//page($page,$total,$limit,$RsId,$Group,$Story,$MeetTotal,$Room,$sDate,$eDate,$EqSupport,$RsName,$TelNum );

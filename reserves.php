@@ -258,9 +258,9 @@ var offsetEI;
                       <table width="800" border="0" cellpadding="0" cellspacing="1">
                         <tr>
                           <td width="100"><strong>Name </strong></td>
-                          <td width="317"><input name="name" id="name" value="<? echo $name;?>" /></td>
+                          <td width="317"><input name="name" id="name" placeholder="First-Last" value="<? echo $name;?>" /></td>
                           <td width="100"><strong>Position </strong></td>
-                          <td width="178" colspan="2" align="left"><input name="position" id="position" value="<? echo $position;?>" />
+                          <td width="178" colspan="2" align="left"><input name="position" id="position" placeholder="Position" value="<? echo $position;?>" />
                           </td>
                         </tr>
 
@@ -277,15 +277,15 @@ var offsetEI;
                               </select>
                           </td>
                           <td><p align="left"><strong>Tel.</strong></p> </td>
-                          <td align="left"><input name="tel" id="tel" value="<? echo $tel;?>" size="20" /></td>
+                          <td align="left"><input name="tel" id="tel" placeholder="####"value="<? echo $tel;?>" size="20" /></td>
                         </tr>
 
 
                         <tr>
                           <td><p align="left"><strong>Extension No.</strong></p> </td>
-                          <td align="left"><input name="ext" id="ext" value="<? echo $ext;?>" size="10" /></td>
+                          <td align="left"><input name="ext" id="ext" placeholder="####"value="<? echo $ext;?>" size="10" /></td>
                           <td><p align="left"><strong>Email Address </strong></p></td>
-                          <td align="left"><input name="email" id="v" value="<? echo $email;?>" /></td>
+                          <td align="left"><input name="email" id="v" placeholder=" "value="<? echo $email;?>" /></td>
                         </tr>
 
                         <tr>
