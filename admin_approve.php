@@ -96,7 +96,7 @@ if($total !=0){
 
 								while($record=mysql_fetch_array($result )){
 										$num++;
-										
+                    $van_reserve_id = $record[van_reserve_id];
 										$dept = $record[department];
 										$name = $record[name];
 										$position = $record[position];
@@ -109,8 +109,9 @@ if($total !=0){
 										$reason  = $record[reason];
 										$driver_name = $record[driver_name];
 										$driver_postion = $record[driver_position];
-										
-																				
+                    $notiMail = $record[email];
+
+
 										/*$RsId = $record[RsId];
 										$Group1 = $record[Group1];
 										$Story = $record[Story];
@@ -123,6 +124,7 @@ if($total !=0){
 										$TelNum = $record[TelNum];
 										$notiMail = $record[notify_email];
 										*/
+
 										$y = split(" ",$sDate); //แยกวันที่กับเวลา
 										$ey = split(" ",$eDate);
 										$d = split("-",$y[0]);
@@ -153,7 +155,8 @@ if($total !=0){
 															<td align=center>$driver_name</td>
 															<td align=center>$driver_postion</td>
 															<td align=center >
-															[<a href=save.php?save=1&&id=$RsId&&email=$notiMail>Approve</a>][<a href=save.php?remove=1&&id=$RsId&&email=$notiMail>Delete</a>]
+															[<a href=save.php?save=1&&id=$van_reserve_id&&email=$notiMail>Approve</a>]
+                              [<a href=save.php?remove=1&&id=$van_reserve_id&&email=$notiMail>Delete</a>]
 															</td>
 													</tr>";
 								}

@@ -109,6 +109,7 @@ $driver_position  	= $_POST[driver_position];
 $driver_licence   	 = $_POST[driver_licence];
 $status = 1;
 
+
 function mailto($rsId,$noti){
 include "config.php";
 require("PHPMailer_v5.0.2/class.phpmailer.php");
@@ -122,13 +123,15 @@ $rseDate = "$_POST[eday]-$_POST[ekwm]-$_POST[eyear]";
 
 $mail = new PHPMailer();
 $mail->CharSet = "utf-8";
-$mail->From = "reservation@th.knightfrank.com";
+//$mail->From = "reservation@th.knightfrank.com"; // อีเมล์จากคนจอง
+$mail->From = "sirasit.khongsangdao@gmail.com"; // อีเมล์จากคนจอง
 $mail->FromName = "Van Reservation System";
 $mail->SMTPSecure = 'tls';
 $mail->Host = "mail.knightfrankthailand.com";
 
 $mail->Mailer = "smtp";
-$mail->AddAddress("it@th.knightfrank.com","it@th.knightfrank.com");
+//$mail->AddAddress("it@th.knightfrank.com","it@th.knightfrank.com");
+$mail->AddAddress("sirasit.khongsangdao@gmail.com","sirasit.khongsangdao@gmail.com");//ฟังก์ชัน AddAddress(อีเมล์แอดเดรสของผู้รับ, ชื่อผู้รับ)
 
 
 $mail->Subject = "Online Notification from Van Reservation"; //ชื่อหัวข้อจดหมาย
@@ -183,11 +186,11 @@ $mail->Body = "<html>
 	$mail->IsHTML(true); //กำหนดให้เป็น false ถ้าข้อความที่ต้องการส่งเป็นข้อความธรรมดา $mail->IsHTML(false);
 	//กำหนดให้เป็น true ถ้าข้อความที่ต้องการส่งเป็นเว็บเพจ $mail->IsHTML(true);
 	$mail->SMTPAuth = "true";
-	$mail->Username = "ot@th.knightfrank.com";
-	$mail->Password = "wvmu123";
+	$mail->Username = "sweet1993@hotmail.co.th";
+	$mail->Password = "0895350381";
 
 
-	/*
+
 	if(!$mail->Send())
 	{ //กรณีส่งเมล์ไม่สำเร็จ
 	echo "There was an error sending the message";
@@ -196,7 +199,18 @@ $mail->Body = "<html>
 	{ //กรณีส่งเมล์ได้สำเร็จ
 	echo "Message send successfully.";
 	}
-	*/
+
+
+		/*
+		if(!$mail->Send())
+		{ //กรณีส่งเมล์ไม่สำเร็จ
+		echo "There was an error sending the message";
+		}
+		else
+		{ //กรณีส่งเมล์ได้สำเร็จ
+		echo "Message send successfully.";
+		}
+		*/
 
 }
 
@@ -205,7 +219,7 @@ function mailtoAdmin(){
 	require("PHPMailer_v5.0.2/class.phpmailer.php");
 
 	$mail = new PHPMailer(); // การเรียกใช้งานไฟล์พื้นฐานในการส่งอีเมล์
-	$mail->From = "reservation@th.knightfrank.com"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)
+	$mail->From = "reservation@th.knightfrank.com"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)  //ต้องรับจากฐานข้อมูลโดยดูจาก คนส่งคนนั้นๆ
 	$mail->FromName = "Van Reservation System"; //ชื่อผู้ส่ง (Sender Name)
 	$mail->SMTPSecure = 'tls';
 	$mail->Host = "mail.knightfrankthailand.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
@@ -225,9 +239,10 @@ function mailtoAdmin(){
 	//กำหนดให้เป็น true ถ้าข้อความที่ต้องการส่งเป็นเว็บเพจ $mail->IsHTML(true);
 
 	$mail->SMTPAuth = "true";
-	$mail->Username = "ot@th.knightfrank.com";
-	$mail->Password = "wvmu123";
-
+	//$mail->Username = "ot@th.knightfrank.com";
+	//$mail->Password = "wvmu123";
+	$mail->Username = "sweet1993@hotmail.co.th";
+	$mail->Password = "0895350381";
 	// คำสั่งในการส่งเมล์
 	/*
 	if(!$mail->Send())
@@ -245,10 +260,10 @@ function mailtoAdmin(){
 function mailtoBack($emailBack,$resID,$type,$status,$rejects){
 
 	include "config.php";
-
+  	echo $resID;
 		$link = mysql_connect($host,$user,$pass)  or die ("<div align='center' > ไม่สามมารถติดต่อฐานข้อมูลได้ </div>");
 		mysql_select_db($dbname,$link) or die ("");
-		mysql_query("USE minimart;");
+		mysql_query("USE van_reserve;");
 		mysql_query("SET NAMES 'utf8';");
 
 	if($type == "van"){
@@ -447,7 +462,7 @@ include "config.php";
 	$link = mysql_connect($host,$user,$pass)  or die ("<div align='center' > ไม่สามมารถติดต่อฐานข้อมูลได้ </div>");
 	mysql_select_db($dbname,$link) or die ("ชื่อฐานข้อมูลผิด");
 	if($link){
-				mysql_query("USE minimart; ");
+				mysql_query("USE van_reserve; ");
 				mysql_query("SET NAMES 'utf8'; ");
 
 				if($save==1){
@@ -477,11 +492,11 @@ include "config.php";
 						mailtoAdmin();
 				}
 				else if($remove==1){
-							$sqlTime = "select * from van_reserve where RsId ='$id'";
+						/*	$sqlTime = "select * from van_reserve where van_reserve_id ='$van_reserve_id'";
 							$resultTime = mysql_query($sqlTime) or die ("คิวรี่ไม่ได้");
 							while($timeQuery = mysql_fetch_array($resultTime)){
-								$timeStart = $timeQuery[sDate];
-								$timeEnd = $timeQuery[eDate];
+								$timeStart = $timeQuery[start_date];
+								$timeEnd = $timeQuery[end_date];
 							}
 								$splitTime = explode(" ",$timeStart);
 								$rsvDate = $splitTime[0];
@@ -493,18 +508,22 @@ include "config.php";
 								$endSplits = explode(" ",$timeEnd);
 								$eTimes = $endSplits[1];
 
-								$timeReject = $dateShows." ".$sTimes." - ".$eTimes;
-
-							$sql = "delete from van_reserve where van_reserve_id = '$id'" or die("ไม่พบฐานข้อมูล");
-							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
+								$timeReject = $dateShows." ".$sTimes." - ".$eTimes;*/
+								$ID_VAN=$_GET[$van_reserve_id];
+								echo $id;
+								echo $email;
+							$sql = "delete from van_reserve where van_reserve_id = $id" or die("ไม่พบฐานข้อมูล");
+							$result = mysql_query($sql) or die ("GGG");
 							$url="index.php?page=admin";
 							$echo = "<br>ลบข้อมูลเรียบร้อยแล้ว...";
-							$rsType = "rooms";
+							$rsType = "Van";
 							$rsvStatus = "reject";
 							mailtoBack($_GET[email],$_GET[id],$rsType,$rsvStatus,$timeReject);
 				}
 				else if($remove==2){
 						$sql = "delete from eq  where EqId = '$id'" or die("ไม่พบฐานข้อมูล");
+						//echo $sql;
+
 						$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
 							$url="index.php?page=admin";
 							$echo = "<br>ลบข้อมูลเรียบร้อยแล้ว...";
