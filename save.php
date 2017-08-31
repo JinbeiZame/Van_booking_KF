@@ -107,7 +107,7 @@ $driver_id  	  	  = $_POST[driver_id];
 $driver_name  		= $_POST[driver_name];
 $driver_position  	= $_POST[driver_position];
 $driver_licence   	 = $_POST[driver_licence];
-$status = 1;
+$status = "van";
 
 
 function mailto($rsId,$noti){
@@ -126,8 +126,10 @@ $mail->CharSet = "utf-8";
 //$mail->From = "reservation@th.knightfrank.com"; // อีเมล์จากคนจอง
 $mail->From = "sirasit.khongsangdao@gmail.com"; // อีเมล์จากคนจอง
 $mail->FromName = "Van Reservation System";
-$mail->SMTPSecure = 'tls';
-$mail->Host = "mail.knightfrankthailand.com";
+//$mail->SMTPSecure = 'tls';
+$mail->SMTPSecure = 'ssl';
+//$mail->Host = "mail.knightfrankthailand.com";
+$mail->Host ="smtp.gmail.com";
 
 $mail->Mailer = "smtp";
 //$mail->AddAddress("it@th.knightfrank.com","it@th.knightfrank.com");
@@ -191,14 +193,14 @@ $mail->Body = "<html>
 
 
 
-	if(!$mail->Send())
+	/*if(!$mail->Send())
 	{ //กรณีส่งเมล์ไม่สำเร็จ
 	echo "There was an error sending the message";
 	}
 	else
 	{ //กรณีส่งเมล์ได้สำเร็จ
 	echo "Message send successfully.";
-	}
+}*/
 
 
 		/*
@@ -219,12 +221,16 @@ function mailtoAdmin(){
 	require("PHPMailer_v5.0.2/class.phpmailer.php");
 
 	$mail = new PHPMailer(); // การเรียกใช้งานไฟล์พื้นฐานในการส่งอีเมล์
-	$mail->From = "reservation@th.knightfrank.com"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)  //ต้องรับจากฐานข้อมูลโดยดูจาก คนส่งคนนั้นๆ
-	$mail->FromName = "Van Reservation System"; //ชื่อผู้ส่ง (Sender Name)
+	$mail->From = "sweet1993@hotmail.co.th"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)  //ต้องรับจากฐานข้อมูลโดยดูจาก คนส่งคนนั้นๆ
+	//$mail->FromName = "Van Reservation System"; //ชื่อผู้ส่ง (Sender Name)
+	$mail->FromName = "Van Reservation System edittions"; //ชื่อผู้ส่ง (Sender Name)
+	//$mail->SMTPSecure = 'tls';
 	$mail->SMTPSecure = 'tls';
-	$mail->Host = "mail.knightfrankthailand.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
+//	$mail->Host = "mail.knightfrankthailand.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
+	$mail->Host = "smtp.live.com";
+//	$mail->Host ="smtp.gmail.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
 	$mail->Mailer = "smtp"; //ชื่อวิธีการส่ง ให้ระบุเป็น "smtp"
-	$mail->AddAddress("it@th.knightfrank.com","it@th.knightfrank.com"); //ฟังก์ชัน AddAddress(อีเมล์แอดเดรสของผู้รับ, ชื่อผู้รับ)
+	$mail->AddAddress("sirasit.khongsangdao@gmail.com","sirasit.khongsangdao@gmail.com"); //ฟังก์ชัน AddAddress(อีเมล์แอดเดรสของผู้รับ, ชื่อผู้รับ)
 	$mail->Subject = "Online Notification from Van Reservation"; //ชื่อหัวข้อจดหมาย
 	$mail->Body = "<html>
 			<head>
@@ -336,7 +342,7 @@ function mailtoBack($emailBack,$resID,$type,$status,$rejects){
 		}
 
 	if($status == "reject"){
-		$titleDisplay = "<span style='color:red;'>Notebook ที่ท่านจองไว้ไม่ได้รับการอนุมัติ<br>";
+		$titleDisplay = "<span style='color:red;'>Van ที่ท่านจองไว้ไม่ได้รับการอนุมัติ<br>";
 		$titleDisplay.= "เนื่องจากช่วงเวลา $rejects ที่ท่านจองไม่มีอุปกรณ์ว่าง</span>";
 		$msgDisplay = "<p><a href='http://10.0.0.251/van-requisition/index.php?page=resv_room'>คลิกที่นี่เพื่อเข้าสู่ระบบจองอุปกรณ์</a></p>";
 	} else if($status == "approve"){
@@ -385,12 +391,15 @@ function mailtoBack($emailBack,$resID,$type,$status,$rejects){
 	$mail = new PHPMailer(); // การเรียกใช้งานไฟล์พื้นฐานในการส่งอีเมล์
 	$mail->CharSet = "utf-8";
 	$mail->From = "reservation@th.knightfrank.com"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)
-	$mail->FromName = "Notebook Reservation System"; //ชื่อผู้ส่ง (Sender Name)
+	$mail->From = "sweet1993@hotmail.co.th"; //อีเมล์แอดเดรสของผู้ส่ง (Sender address)
+	$mail->FromName = "Van Reservation System"; //ชื่อผู้ส่ง (Sender Name)
 	$mail->SMTPSecure = 'tls';
-	$mail->Host = "mail.knightfrankthailand.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
+	//$mail->Host = "mail.knightfrankthailand.com"; //ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
+	//$mail->Host = "smtp.gmail.com";//ชื่อของเครื่องเซิร์ฟเวอร์ที่ให้บริการส่งอีเมล์ (SMTP mail server) ให้ระบุเป็น "localhost"
+	$mail->Host = "smtp.live.com";
 	$mail->Mailer = "smtp"; //ชื่อวิธีการส่ง ให้ระบุเป็น "smtp"
 	$mail->AddAddress($emailBack,"$emailBack"); //ฟังก์ชัน AddAddress(อีเมล์แอดเดรสของผู้รับ, ชื่อผู้รับ)
-	$mail->Subject = "Online Notification from Notebook Reservation"; //ชื่อหัวข้อจดหมาย
+	$mail->Subject = "Online Notification from Van Reservation"; //ชื่อหัวข้อจดหมาย
 	$mail->Body = "<html>
 			<head>
 			<title>Online Notification from Notebook Reservation</title>
@@ -436,8 +445,8 @@ function mailtoBack($emailBack,$resID,$type,$status,$rejects){
 	//กำหนดให้เป็น true ถ้าข้อความที่ต้องการส่งเป็นเว็บเพจ $mail->IsHTML(true);
 
 	$mail->SMTPAuth = "true";
-	$mail->Username = "ot@th.knightfrank.com";
-	$mail->Password = "wvmu123";
+	$mail->Username = "sweet1993@hotmail.co.th";
+	$mail->Password = "0895350381";
 
 	// คำสั่งในการส่งเมล์
 	if(!$mail->Send())
@@ -466,7 +475,7 @@ include "config.php";
 				mysql_query("SET NAMES 'utf8'; ");
 
 				if($save==1){
-						$sql = "update van_reserve set status = '1' where van_reserve_id = '$id' " or die("ไม่พบฐานข้อมูล");
+						$sql = "update van_reserve set status = 'van' where van_reserve_id = '$id' " or die("ไม่พบฐานข้อมูล");
 						$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
 						$url="index.php?page=admin";
 						$echo = "<br>อนุมัติการจองเรียบร้อยแล้วครับ...";
@@ -475,7 +484,7 @@ include "config.php";
 						mailtoBack($_GET[email],$_GET[id],$rsType,$rsvStatus,$timeReject);
 				}
 				else if($save==2){
-						$sql = "update eq set Status = '1' where EqId='$id' " or die("ไม่พบฐานข้อมูล");
+						$sql = "update eq set Status = 'van' where EqId='$id' " or die("ไม่พบฐานข้อมูล");
 						$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
 						$url="index.php?page=admin";
 						$echo = "<br>อนุมัติการจองเรียบร้อยแล้วครับ...";

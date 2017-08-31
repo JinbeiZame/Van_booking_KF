@@ -55,7 +55,7 @@
 							mysql_query("SET NAMES 'utf8'; ");
 							//$sqlnum = " select  * from  van_reserve where Status='' ";
 							$sqlnum = " select  * from  van_reserve  ";
-							$sql = " select  * from  van_reserve where Status = '1' ";
+							$sql = " select  * from  van_reserve where Status = 'van' ";
 							//$sql = " select  * from  van_reserve where Status='' order by RsId desc ";
 							$result = mysql_query($sql) or die ("คิวรี่ไม่ได้");
 							$num=mysql_query($sqlnum) or die ("Please....");
